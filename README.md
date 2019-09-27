@@ -4,7 +4,7 @@ Rofi userscript to manage local copies of your gists created by [gister](https:/
 
 I like using [Dash](https://kapeli.com/dash) to manage code snippets on OSX.  [Lepton](https://github.com/hackjutsu/Lepton) does a good job with managing the snippets, but accessing them leaves something to be desired when compared with Dash's expansion functionality.  I also like using Rofi for a variety of quick tasks, so I wrote this userscript.
 
-![usage](demo.gif)
+![usage](assets/demo.gif)
 
 ## Dependencies
 
