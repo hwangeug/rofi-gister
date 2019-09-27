@@ -9,6 +9,7 @@ I like using [Dash](https://kapeli.com/dash) to manage code snippets on OSX.  [L
 ## Dependencies
 
 - [rofi](https://github.com/davatorium/rofi)
+- [xclip](https://github.com/astrand/xclip)
 - [gister](https://github.com/weakish/gister)
 - [gist.rb](https://github.com/defunkt/gist)
 - [jq](https://stedolan.github.io/jq/)
