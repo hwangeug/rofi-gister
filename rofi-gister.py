@@ -6,20 +6,15 @@ import json
 import csv
 import io
 import re
+import configparser
 from typing import Dict, Tuple, List
 from subprocess import run, PIPE
 
 
-GISTER_PATH = os.path.join(os.environ['HOME'], 'GitHub', 'gister', 'gister.sh')
-GISTS_ROOT = os.path.join(os.environ['HOME'], '.gists')
-GISTS_DESC_FILE = os.path.join(GISTS_ROOT, 'gists.list')
-GISTS_TREE = os.path.join(GISTS_ROOT, 'tree')
-
-
 # Read gists.list file
-def process_gists(gists_def: Dict) -> Tuple:
+def process_gists(gists_def: Dict, gists_tree_loc: str) -> Tuple:
     descs = [list(g['files'].keys())[0] + ': ' + g['description'] for g in gists_def]
-    locs = [os.path.join(GISTS_TREE, g['id'], list(g['files'].keys())[0]) for g in gists_def]
+    locs = [os.path.join(gists_tree_loc, g['id'], list(g['files'].keys())[0]) for g in gists_def]
     
     return(descs, locs)
 
@@ -85,11 +80,28 @@ def rofi_gist_selector(gist_descs: List, gist_locs: List,
 
 
 def main() -> None:
+    # Read config file
+    try:
+        with open(os.path.join(os.environ['HOME'], '.rofi-gister'), 'r') as f:
+            config_data = f.read()
+    except FileNotFoundError:
+        config_data = '\n'
+
+    parser = configparser.ConfigParser()
+    parser.read_string('[config]\n' + config_data)
+    gists_dir = os.path.expanduser(parser.get('values', 'gists_dir', fallback='~/.gists'))
+
+    global GISTER_PATH
+    GISTER_PATH = os.path.expanduser(parser.get('values', 'gister_path', fallback='/usr/bin/gister'))
+
+    gists_desc_file = os.path.join(gists_dir, 'gists.list')
+    gists_tree_loc = os.path.join(gists_dir, 'tree')
+
     # Read gister file and extract gist descriptions / locations
-    with open(GISTS_DESC_FILE, 'r') as f:
+    with open(gists_desc_file, 'r') as f:
         gists_def = json.load(f)
     
-    gist_descs, gist_locs = process_gists(gists_def)
+    gist_descs, gist_locs = process_gists(gists_def, gists_tree_loc)
     master_gist_descs = gist_descs
     master_gist_locs = gist_locs
 

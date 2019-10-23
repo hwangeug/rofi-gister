@@ -15,9 +15,17 @@ I like using [Dash](https://kapeli.com/dash) to manage code snippets on OSX.  [L
 - [jq](https://stedolan.github.io/jq/)
 - [Python 3](https://www.python.org/)
 
+## Installation
+
+### Arch Linux
+
+Install the `rofi-gister-git` package from the [Arch User Repository](https://aur.archlinux.org/).
+
 ## Usage
 
-Prior to your first use, use gister to create a local copy of your repository in `~/.gists`.
+Prior to your first use, use gister to create a local copy of your repository (default location is `~/.gists`)
+
+Optionally, create a file called `.rofi-gister` in your home directory, following the format and keys in the example configuration file in this repository (currently only the path to your gists, and the path to your `gister` script).
 
 Launch the userscript somehow (bind a key to it, launch it from rofi, etc.)
 
